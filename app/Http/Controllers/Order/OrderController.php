@@ -9,6 +9,7 @@ use App\User;
 use App\models\Order;
 use App\models\Order_History;
 use App\models\Shop;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -23,8 +24,33 @@ class OrderController extends Controller
                     $order = $request->all();
                     unset($order['shop_id'] , $order['order_type']);
                     $order['order_id'] = $order_id;
+
+                    // image setting and upload section .........................
+                    if ($file = base64_decode($request['image'])) 
+                    {
+                        $destinationPath = public_path('role'.$request->user()->role.'/');;
+                        if (!is_dir($destinationPath)) {
+                            mkdir($destinationPath);
+                        }
+                        $destinationPath = public_path('role'.$request->user()->role.'/orderImage/');;
+                        if (!is_dir($destinationPath)) {
+                            mkdir($destinationPath);
+                        }
+                            $time = md5(date("Y/m/d-H:ia")); 
+                            $imageName = Str::random(10).'.'.'jpeg';
+                            $profileImage = $time.'_'.$imageName;
+                            $productImages=  'role'.$request->user()->role.'/orderImage/'.$profileImage;
+                            $order['order_image'] = $productImages;
+                    }
                     $orderHis = Order_History::create($order)->id;
-                    return response()->json(['success'=> 'Success']);
+
+                    if($orderHis){
+                        $success = file_put_contents(public_path().'/role'.$request->user()->role.'/orderImage/'.$profileImage, $file);
+                        return response()->json(['success'=> 'Success']);                    }
+                    else{
+                        return response()->json(['error'=>'please try once.']);
+                    }
+
                 } catch (\Illuminate\Database\QueryException $OrderHistEx) {
                     return response()->json(['error'=>$OrderHistEx]);
                 }  
@@ -36,6 +62,23 @@ class OrderController extends Controller
                         $order = $request->all();
                         unset($order['shop_id'] , $order['order_type']);
                         $order['order_id'] = $order_id;
+                        // image setting and upload section .........................
+                        if ($file = base64_decode($request['image'])) 
+                        {
+                            $destinationPath = public_path('role'.$request->user()->role.'/');;
+                            if (!is_dir($destinationPath)) {
+                                mkdir($destinationPath);
+                            }
+                            $destinationPath = public_path('role'.$request->user()->role.'/orderImage/');;
+                            if (!is_dir($destinationPath)) {
+                                mkdir($destinationPath);
+                            }
+                                $time = md5(date("Y/m/d-H:ia")); 
+                                $imageName = Str::random(10).'.'.'jpeg';
+                                $profileImage = $time.'_'.$imageName;
+                                $productImages=  'role'.$request->user()->role.'/orderImage/'.$profileImage;
+                                $order['order_image'] = $productImages;
+                        }
                         $orderHis = Order_History::create($order)->id;
                         return response()->json(['success'=> 'Success']);
                     } catch (\Illuminate\Database\QueryException $OrderHistoryEx) {

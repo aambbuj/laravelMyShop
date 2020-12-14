@@ -51,32 +51,5 @@ class ImageController extends Controller
             }
         }
         
-        
-        // if ($files = $request->file('productImage'))
-        // {
-        //     $destinationPath = public_path('role'.$request->role.'/');;
-        //     if (!is_dir($destinationPath)) {
-        //         mkdir($destinationPath);
-        //     }
-        //     $destinationPath = public_path('role'.$request->role.'/product/');;
-        //     if (!is_dir($destinationPath)) {
-        //         mkdir($destinationPath);
-        //     }
-        //     foreach($files as $img) {   
-        //     $time = md5(date("Y/m/d-H:ia"));     
-        //     $profileImage = $time.'_'.$img->getClientOriginalName();
-        //     $img->move($destinationPath, $profileImage);
-        //         $images[] =  'role'.$request->role.'/product/'.$profileImage;
-        //     }
-        //     $productImages = implode(",",$images);
-        //                 $product = array('product_image'=>$productImages);
-        //     $result = Product::create($product)->id;
-        //     if ($result) {
-                
-        //         return response()->json(['product_id' => $result, 'success' =>'Product Add Successfull']); 
-        //     } else {
-        //         return response()->json(['error' =>'please try again']);    
-        //     }
-        // }
     }
 }
