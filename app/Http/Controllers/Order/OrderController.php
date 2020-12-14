@@ -41,16 +41,11 @@ class OrderController extends Controller
                             $profileImage = $time.'_'.$imageName;
                             $productImages=  'role'.$request->user()->role.'/orderImage/'.$profileImage;
                             $order['order_image'] = $productImages;
+                            $success = file_put_contents(public_path().'/role'.$request->user()->role.'/orderImage/'.$profileImage, $file); 
                     }
                     $orderHis = Order_History::create($order)->id;
-
-                    if($orderHis){
-                        $success = file_put_contents(public_path().'/role'.$request->user()->role.'/orderImage/'.$profileImage, $file);
-                        return response()->json(['success'=> 'Success']);                    }
-                    else{
-                        return response()->json(['error'=>'please try once.']);
-                    }
-
+                    return response()->json(['success'=> 'Success']);
+                    return response()->json($order);
                 } catch (\Illuminate\Database\QueryException $OrderHistEx) {
                     return response()->json(['error'=>$OrderHistEx]);
                 }  
@@ -80,6 +75,7 @@ class OrderController extends Controller
                                 $profileImage = $time.'_'.$imageName;
                                 $productImages=  'role'.$request->user()->role.'/orderImage/'.$profileImage;
                                 $order['order_image'] = $productImages;
+                                $success = file_put_contents(public_path().'/role'.$request->user()->role.'/orderImage/'.$profileImage, $file); 
                         }
                         $orderHis = Order_History::create($order)->id;
                         return response()->json(['success'=> 'Success']);
