@@ -58,7 +58,9 @@ class OrderController extends Controller
                 try {
                     $orderArr = array('shop_id' => $request->shop_id , 'order_type' => $request->order_type);
                     $order_id = Order::create($orderArr)->id;
+                    
                     try {
+
                         $order = $request->all();
                         unset($order['shop_id'] , $order['order_type']);
                         $order['order_id'] = $order_id;
