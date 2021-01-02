@@ -21,7 +21,7 @@ class ProductController extends Controller
             $brandWiseCategory = Brand::where('user_id',$request->user()->id)->with('categories')->get();
             return response()->json($brandWiseCategory);
         }
-        catch(\Illuminate\Database\QueryException $Exception)
+        catch(\Exception $Exception)
         {
             if($Exception){
                 return response()->json(['error'=>$Exception]);
@@ -35,7 +35,7 @@ class ProductController extends Controller
             $product_id = Product::create($request->all());
             return response()->json(['success' => 'Success','product_id' => $product_id]);
         }
-        catch(\Illuminate\Database\QueryException $Exception)
+        catch(\Exception $Exception)
         {
             if($Exception){
                 return response()->json(['error'=>$Exception]);
@@ -69,12 +69,12 @@ class ProductController extends Controller
                     }
                 }
                 return response()->json($data);
-            } catch (\Illuminate\Database\QueryException $Exception) {
+            } catch (\Exception $Exception) {
                if ($Exception) {
                 return response()->json(['error'=>$Exception]);
                }
             }
-        }catch(\Illuminate\Database\QueryException $ProductException)
+        }catch(\Exception $ProductException)
         {
             if($ProductException){
                 return response()->json(['error'=>$ProductException]);

@@ -63,6 +63,13 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('payment', 'Payment\PaymentController@payment')->name('payment');
     });
 
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::post('upload-documents', 'Sim\SimSwapController@uploadDocuments');
+        Route::post('get-documents', 'Sim\SimSwapController@getDocuments');
+        Route::post('add-sim_details', 'Sim\SimSwapController@addSimData');
+    });
+    
+
 });
 
 

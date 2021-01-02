@@ -16,7 +16,7 @@ class CreateOrderHistoriesTable extends Migration
         Schema::create('order__histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->string('order_image',12)->nullable();
+            $table->string('order_image')->nullable();
             $table->string('customer_phone',12)->nullable();
             $table->string('product_name',25);
             $table->decimal('order_price');

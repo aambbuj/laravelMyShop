@@ -25,7 +25,7 @@ class OrderController extends Controller
                     unset($order['shop_id'] , $order['order_type']);
                     $order['order_id'] = $order_id;
 
-                    // image setting and upload section .........................
+                    // image upload section .........................
                     if ($file = base64_decode($request['order_image'])) 
                     {
                         $destinationPath = public_path('role'.$request->user()->role.'/');;
