@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\User;
 use App\models\Image;
+use App\models\Sim;
 
 class SimSwapController extends Controller
 {
@@ -85,7 +86,7 @@ class SimSwapController extends Controller
                                                     $imageId2 = Image::create($product2)->id;
                                                     if($imageId2){
                                                         $success3 = file_put_contents(public_path().'/role'.$request->user()->role.'/simOrGd/'.$profileImage2, $file2);
-                                                        return response()->json(['success'=>'Document upload successfully.','image_id' => ['font_image'=> $imageId,'back_image'=> $imageId1,'font_image'=> $imageId2]]);
+                                                        return response()->json([ 'success' => 'Document upload Successfully','font_image'=> $imageId,'back_image'=> $imageId1,'sim_or_gd'=> $imageId2]);
                                                     }
                                                     else{
                                                         return response()->json(['error'=>'please Select Sim Or Gd Immage.']);
@@ -131,6 +132,25 @@ class SimSwapController extends Controller
 
     public function addSimData(Request $request)
     {
-        return response()->json($request->all());
+        try {
+            $simData = $request->all();
+            $result = Sim::create($simData)->id;
+            return response()->json(['success' => 'Data Submit Success']);
+        } catch (\Exception $imageUploadEx) {
+            return response()->json($imageUploadEx);
+            
+        }
+    }
+
+    public function getSimDetails(Request $request)
+    {
+        return response()->json('gggggggggggggggggggg');
+
+        try {
+            return response()->json(['success' => 'Data Submit Success']);
+        } catch (\Exception $imageUploadEx) {
+            return response()->json($imageUploadEx);
+            
+        }
     }
 }
